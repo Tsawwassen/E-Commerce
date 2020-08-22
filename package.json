@@ -4,7 +4,8 @@
   "description": "e commerce web app",
   "main": "index.js",
   "scripts": {
-    "server": "cd server && npm start"
+    "server": "cd server && npm start",
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",
