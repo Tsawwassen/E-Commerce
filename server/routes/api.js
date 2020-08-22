@@ -10,19 +10,20 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ecomm', {useNewUrlParser: true,  useUnifiedTopology: true });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     res.send('respond with an api resource');
 });
 
-router.get('/items', function(req, res, next){
+router.get('/items', function(req, res){
     Items.find(req.query)
-	.then(parts => {
-		res.json({data: parts});
+	.then(items => {
+		res.json({status: "success", data: items});
 	})
 	.catch(error => {
 		res.json({status: "error", data: error});
     });
 });
+
 
 /**
  * TODO
