@@ -3,6 +3,7 @@ var router = express.Router();
 
 //Models
 var Items = require('../models/item');
+var Orders = require('../models/order');
 
 //Database
 var mongoose = require('mongoose');
@@ -20,7 +21,7 @@ router.get('/items', function(req, res, next){
 	})
 	.catch(error => {
 		res.json({status: "error", data: error});
-	});
+    });
 });
 
 
