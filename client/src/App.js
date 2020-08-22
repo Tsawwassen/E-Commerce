@@ -1,5 +1,5 @@
 //Imports
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navigation from './components/nav.js';
 
@@ -7,29 +7,35 @@ import Navigation from './components/nav.js';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  return (
-    
-    <Router>
-      <div className="app">
-        <Navigation />
-        <div className="container">
-          <Switch>
-            <Route path="/items">
-              <h1>Items</h1>
-            </Route>
-            <Route path="/orders">
-              <h1>Orders</h1>
-            </Route>
-            <Route path="/">
-              <h1>home</h1>
-            </Route>
-          </Switch>
+class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+    }
+  }
+  render() {
+    return (
+      <Router>
+        <div className="app">
+          <Navigation />
+          <div className="container">
+            <Switch>
+              <Route path="/items">
+                <h1>Items</h1>
+              </Route>
+              <Route path="/orders">
+                <h1>Orders</h1>
+              </Route>
+              <Route path="/">
+                <h1>home</h1>
+              </Route>
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
-    
-  );
+      </Router>
+    )
+  }
 }
 
 export default App;
