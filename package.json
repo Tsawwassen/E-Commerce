@@ -1,0 +1,20 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "e commerce web app",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tsawwassen/E-Commerce.git"
+  },
+  "author": "Mitchell Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tsawwassen/E-Commerce/issues"
+  },
+  "homepage": "https://github.com/Tsawwassen/E-Commerce#readme",
+  "dependencies": {}
+}
