@@ -24,5 +24,11 @@ router.get('/items', function(req, res, next){
     });
 });
 
+/**
+ * TODO
+ * 
+ * Orders (create, get)
+ * 
+ */
 
 module.exports = router;
