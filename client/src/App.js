@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navigation from './components/nav.js';
+import Items from './components/items.js';
 
 //CSS
 import './App.css';
@@ -12,6 +13,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
+    
+
     }
   }
   render() {
@@ -22,7 +25,7 @@ class App extends Component {
           <div className="container">
             <Switch>
               <Route path="/items">
-                <h1>Items</h1>
+                <Items />
               </Route>
               <Route path="/orders">
                 <h1>Orders</h1>
