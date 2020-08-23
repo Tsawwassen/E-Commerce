@@ -19,7 +19,10 @@ Learnt some new skills in July / August (async/await, promisses, Array.map), and
 - Promisses
 - Array functions
 
-## Code Example
+## Code Example / Misc things I learned during the project
+- When adding a proxy to a package.json file, the React app will need to be manually restarted to get the updated proxy info
+- When working with forms, place the onSubmit function call in the <Form> tags and not the <Button> tag
+--If placed in the Button tag, the page will still refresh even with 'event.preventDefault()'
 
 
 ## Installation
