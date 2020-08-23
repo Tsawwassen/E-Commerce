@@ -13,10 +13,10 @@ class Navigation extends Component {
     return (
       <div>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/">E-Commerce</Navbar.Brand>
+          <Navbar.Brand value='/' onClick={this.props.onClick}>E-Commerce</Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link href="/items">Items</Nav.Link>
-            <Nav.Link href="/cart">View Cart</Nav.Link>
+            <Nav.Link value='/item' onClick={this.props.onClick}>Items</Nav.Link>
+            <Nav.Link value='/cart' onClick={this.props.onClick}>View Cart</Nav.Link>
           </Nav>
         </Navbar>
       </div>
