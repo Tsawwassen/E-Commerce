@@ -7,21 +7,7 @@ import './items.scss';
 //I question if this componenet should even have a state values
 //// In my head, I expected this componenet to only have JSX functions, but I was having trouble finding where the /api/items fetch call should be called to populate hte screen
 class Items extends Component {
-  constructor(props){
-    super(props);
-    this.state ={
-      itemList: [],
-    }
-    this.displayItem = this.displayItem.bind(this);
-  }
 
-  componentDidMount(){
-    fetch('/api/items')
-    .then(res => res.json())
-    .then(items => {
-      this.setState({itemList: items.data});
-    });
-  }
 
   //TODO : I would like to clean up this code and improve how I handle div layouts
   displayItem(item){
@@ -60,7 +46,7 @@ class Items extends Component {
     return (
       <div className="items">
       <h1>Please select items to add you cart</h1>
-        {this.state.itemList.map( (item) => this.displayItem(item) )}
+        {this.props.items.map( (item) => this.displayItem(item) )}
       </div>
     );
   }
