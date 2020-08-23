@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import update from 'react-addons-update';
 
+import Navigation from './nav.js';
 import Items from './items.js';
 import Cart from './cart.js';
 
 class EComm extends Component {
   constructor(props){
     super(props);
+
+    this.HOME = 0;
+    this.ITEM = 1;
+    this.CART = 2;
+
     this.state ={
-      cart: [],
-      items:[]
+        view: "",
+        cart: [],
+        items:[]
     }
+    this.handleViewChange = this.handleViewChange.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
@@ -21,8 +28,19 @@ class EComm extends Component {
     .then(items => {
       this.setState({items: items.data});
     });
+    this.setState({view: this.HOME});
   }
 
+  handleViewChange(event){
+
+    console.log(event.target.attributes.value.value);
+    switch(event.target.attributes.value.value){
+        case '/':this.setState({view: this.HOME});break;
+        case '/cart':this.setState({view: this.CART});break;
+        case '/item':this.setState({view: this.ITEM});break;
+        default: console.log("code should never get here");
+    }
+  }
   handleAddToCart(event){
 
       let {sku, price} = JSON.parse(event.target[0].name);
@@ -62,19 +80,15 @@ class EComm extends Component {
 
   render () {
     return (
-        <Router>
-            <Switch>
-            <Route path="/items">
-                <Items onSubmit={this.handleAddToCart} items={this.state.items}/>
-            </Route>
-            <Route path="/cart">
-                <Cart values={this.state.cart} />
-            </Route>
-            <Route path="/">
-            <h1>home</h1>
-            </Route>
-        </Switch>
-      </Router>
+        <div>
+            <Navigation onClick={this.handleViewChange}/>
+            <div className="container">
+                { this.state.view === this.ITEM && <Items onSubmit={this.handleAddToCart} items={this.state.items}/>  }
+                { this.state.view === this.CART && <Cart values={this.state.cart} /> }
+                { this.state.view === this.HOME &&<h1>home</h1> }
+            </div>
+        </div>
+
     );
   }
 }
