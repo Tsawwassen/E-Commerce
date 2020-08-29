@@ -16,7 +16,7 @@ class Items extends Component {
               <div className="image"></div>
               <div><h2 className="name">{item.name}</h2></div>
               <div className="desc"><p>{item.desc}</p></div>
-              <div> <p className="price">${item.price} each</p> <p className="inventory"> Available : {item.inv_level}</p></div>
+              <div> <p className="price">${item.price} each</p></div>
               <div>
               <Container>
                 <Form onSubmit={this.props.onSubmit}>
