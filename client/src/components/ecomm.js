@@ -32,8 +32,6 @@ class EComm extends Component {
   }
 
   handleViewChange(event){
-
-    console.log(event.target.attributes.value.value);
     switch(event.target.attributes.value.value){
         case '/':this.setState({view: this.HOME});break;
         case '/cart':this.setState({view: this.CART});break;
@@ -41,13 +39,14 @@ class EComm extends Component {
         default: console.log("code should never get here");
     }
   }
+
   handleAddToCart(event){
-
-      let {sku, price} = JSON.parse(event.target[0].name);
-      let qty = event.target[0].value
-
-      let new_item = { sku: sku, price: Number(price), qty: Number(qty)};
-
+      // Dev Note, I like how I get the sku, price, and tax, but I'm note sure if it works in this scenario when I create new_item
+      //  Q? Can I extract the values from event and create the new_item object in one line
+      let {sku, price, tax} = JSON.parse(event.target[0].name);
+      let qty = Number(event.target[0].value);
+      let new_item = { sku: sku, price: price, qty: qty, tax: tax};
+ 
       let added_flag = false; //boolean flag to determine if the event_item is in the cart already or not
   
       //Check if the new_item is in the cart.
@@ -76,7 +75,6 @@ class EComm extends Component {
       }
       event.preventDefault();
   }
- 
 
   render () {
     return (
