@@ -1,5 +1,7 @@
 ## Weekend Project, E Commerce
 Web application where users can order items
+### Weekend 2
+Continue to work on the app. P1, finish the order function, add paypal, then continue to update once a month or so with new things when possible.
 
 ## Goal
 Combine my past and new knowledge/skills to create a full stack app
@@ -10,6 +12,7 @@ Combine my past and new knowledge/skills to create a full stack app
 ### Create frontend interface
 
 ## Post Weekend Project Comment
+Decided to do a second weekend on this, and adding a Paypal integration, the email confirmation, and then continuing to update the app with new 'features' as I learn new things. 
 
 ## Motivation
 Learnt some new skills in July / August (async/await, promisses, Array.map), and I wanted to make a larger weekend project using these tools when the scenario come up
