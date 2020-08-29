@@ -21,7 +21,7 @@ class Cart extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm"><Button onClick={this.props.onClick.removeOne} value={i}>Remove 1 </Button></div>
-                    <div className="col-sm"><Button>Add 1</Button></div>
+                    <div className="col-sm"><Button onClick={this.props.onClick.addOne} value={i}>Add 1</Button></div>
                     <div className="col-sm"><Button onClick={this.props.onClick.removeAll} value={i}>Remove All</Button></div>
                 </div>
                 <div className="row"><div className="col-md"><hr /></div></div>

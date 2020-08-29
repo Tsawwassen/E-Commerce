@@ -22,6 +22,7 @@ class EComm extends Component {
     this.handleAddToCart = this.handleAddToCart.bind(this);
 	this.handleRemoveOne = this.handleRemoveOne.bind(this);
 	this.handleRemoveAll = this.handleRemoveAll.bind(this);
+	this.handleAddOne = this.handleAddOne.bind(this);
   }
 
   componentDidMount(){
@@ -101,13 +102,25 @@ class EComm extends Component {
 	this.setState({cart: this.state.cart.filter((item, index) =>  index !== Number(event.target.value) )});
   }
 
+  handleAddOne(event){
+	this.setState(update(this.state, {
+        cart: {
+            [event.target.value]: {
+                qty: {
+                    $set: this.state.cart[event.target.value].qty + 1
+                }
+            }
+        }
+    }));
+  }
+
   render () {
     return (
         <div>
             <Navigation onClick={this.handleViewChange}/>
             <div className="container">
                 { this.state.view === this.ITEM && <Items onSubmit={this.handleAddToCart} items={this.state.items}/>  }
-                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll}}/> }
+                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne}}/> }
                 { this.state.view === this.HOME &&<h1>home</h1> }
             </div>
         </div>
