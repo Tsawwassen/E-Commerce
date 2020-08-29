@@ -8,7 +8,7 @@ class Cart extends Component {
     displayCartItem(item, i){
         return (
             <div key={i}>
-                <h1> Order Content </h1>
+                <h3>Order Content</h3>
                 <div className="row">
                     <div className="col-sm">
                         <p>{item.sku}</p>
@@ -20,7 +20,7 @@ class Cart extends Component {
                     <div className="col-sm"><p>Total : {item.price * item.qty}</p></div>
                 </div>
                 <div className="row">
-                    <div className="col-sm"><Button>Remove 1 </Button></div>
+                    <div className="col-sm"><Button onClick={this.props.onClick.removeOne} value={i}>Remove 1 </Button></div>
                     <div className="col-sm"><Button>Add 1</Button></div>
                     <div className="col-sm"><Button>Remove All</Button></div>
                 </div>
@@ -42,10 +42,11 @@ class Cart extends Component {
         
         return (
             <div>
-                <h1>Order Summary</h1>
+                <div className="row"><div className="col"><h3>Order Summary</h3></div></div>
                 <div className="row"><div className="col"><p>Subtotal : {subTotal}</p></div></div>
                 <div className="row"><div className="col"><p>Tax Total : {taxTotal}</p></div></div>
                 <div className="row"><div className="col"><p>Grand Total : {subTotal + taxTotal}</p></div></div>
+                <div className="row"><div className="col"><Button>Pay for Order</Button></div></div>
             </div>
 
         );
