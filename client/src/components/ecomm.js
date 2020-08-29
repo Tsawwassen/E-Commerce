@@ -20,7 +20,8 @@ class EComm extends Component {
     }
     this.handleViewChange = this.handleViewChange.bind(this);
     this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.handleRemoveOne = this.handleRemoveOne.bind(this);
+	this.handleRemoveOne = this.handleRemoveOne.bind(this);
+	this.handleRemoveAll = this.handleRemoveAll.bind(this);
   }
 
   componentDidMount(){
@@ -78,23 +79,26 @@ class EComm extends Component {
   }
 
   handleRemoveOne(event){
-    //console.table(event.target.value);
 
     if((this.state.cart[event.target.value].qty - 1) === 0){ 
       	//Not sure if using the filter method is a good way of removing an item from the array, but it works
       	this.setState({cart: this.state.cart.filter((item, index) =>  index !== Number(event.target.value) )});
       	return ; 
-    }
-      
-      this.setState(update(this.state, {
-          cart: {
-              [event.target.value]: {
-                  qty: {
-                      $set: this.state.cart[event.target.value].qty - 1
-                  }
-              }
-          }
-      }));
+	}
+	
+    this.setState(update(this.state, {
+        cart: {
+            [event.target.value]: {
+                qty: {
+                    $set: this.state.cart[event.target.value].qty - 1
+                }
+            }
+        }
+    }));
+  }
+
+  handleRemoveAll(event){
+	this.setState({cart: this.state.cart.filter((item, index) =>  index !== Number(event.target.value) )});
   }
 
   render () {
@@ -103,7 +107,7 @@ class EComm extends Component {
             <Navigation onClick={this.handleViewChange}/>
             <div className="container">
                 { this.state.view === this.ITEM && <Items onSubmit={this.handleAddToCart} items={this.state.items}/>  }
-                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne}}/> }
+                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll}}/> }
                 { this.state.view === this.HOME &&<h1>home</h1> }
             </div>
         </div>
