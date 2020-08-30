@@ -38,6 +38,7 @@ use 'npm start' from project root
 
 
 ## Credits
+Paypal code - Jeff Delaney(Fireship.io), https://github.com/fireship-io/193-paypal-checkout-v2-demos/blob/master/react-app/src/App.js, and https://www.youtube.com/watch?v=AtZGoueL4Vs
 
 
 #### Anything else that seems useful
