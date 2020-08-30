@@ -4,6 +4,7 @@ import update from 'react-addons-update';
 import Navigation from './nav.js';
 import Items from './items.js';
 import Cart from './cart.js';
+import Billing from './billing.js';
 
 class EComm extends Component {
   constructor(props){
@@ -11,7 +12,8 @@ class EComm extends Component {
 
     this.HOME = 0;
     this.ITEM = 1;
-    this.CART = 2;
+	this.CART = 2;
+	this.BILLING = 3;
 
     this.state ={
         view: "",
@@ -40,10 +42,24 @@ class EComm extends Component {
   }
 
   handleViewChange(event){
-    switch(event.target.attributes.value.value){
+	/**
+	* 	Dev Note
+	*	Because the React navbar component is sending link values in event.target.attributes.value.value
+	*	and the React billing component button is sending link values in event.target.value
+	*	Need to check if one is undefined, and set the link variable to the link value to change the view
+	* 		   
+	**/
+	let link = "";
+	if(event.target.value === undefined){
+		link = event.target.attributes.value.value;
+	} else {
+		link = event.target.value;
+	}
+    switch(link){
         case '/':this.setState({view: this.HOME});break;
         case '/cart':this.setState({view: this.CART});break;
-        case '/item':this.setState({view: this.ITEM});break;
+		case '/item':this.setState({view: this.ITEM});break;
+		case '/billing':this.setState({view: this.BILLING});break;
         default: console.log("code should never get here");
     }
   }
@@ -120,7 +136,8 @@ class EComm extends Component {
   }
   
   handleGetBilling(event){
-	  console.log("inside handleGetBilling")
+	  //console.log("inside handleGetBilling");
+	  this.setState({view: this.BILLING});
   }
 
   render () {
@@ -129,8 +146,9 @@ class EComm extends Component {
             <Navigation onClick={this.handleViewChange}/>
             <div className="container">
                 { this.state.view === this.ITEM && <Items onSubmit={this.handleAddToCart} items={this.state.items}/>  }
-                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne, getBilling: this.handleGetBilling}}/> }
-                { this.state.view === this.HOME &&<h1>home</h1> }
+                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne, getBilling: this.handleViewChange}}/> }
+                { this.state.view === this.HOME && <h1>home</h1> }
+				{ this.state.view === this.BILLING && <Billing /> }
             </div>
         </div>
 
