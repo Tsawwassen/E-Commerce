@@ -16,6 +16,8 @@ class EComm extends Component {
 	this.CART = 2;
 	this.BILLING = 3;
 	this.SHIPPING = 4;
+	this.PAYMENT = 5;
+	this.PICKUP_ADDRESS = {address: "5413 7th ave", city:"Tsawwassen", province:"BC", country:"CAN"};
 
     this.state ={
         view: "",
@@ -33,12 +35,18 @@ class EComm extends Component {
 	this.handleRemoveAll = this.handleRemoveAll.bind(this);
 	this.handleAddOne = this.handleAddOne.bind(this);
 
-	//Order component functions
+	//Billing component functions
 	this.handleSubmitBillingAddress = this.handleSubmitBillingAddress.bind(this);
 	this.handleChangeBillingAddress = this.handleChangeBillingAddress.bind(this);
 
+	//Shipping component functions
 	this.handleSubmitShippingAddress = this.handleSubmitShippingAddress.bind(this);
 	this.handleChangeShippingAddress = this.handleChangeShippingAddress.bind(this);
+	this.useBilling = this.useBilling.bind(this);
+	this.usePickup = this.usePickup.bind(this);
+
+	
+
   }
 
   componentDidMount(){
@@ -166,8 +174,7 @@ class EComm extends Component {
   }
 
   handleSubmitShippingAddress(event){
-	console.log("submit shipping address");
-	console.log(this.state.shipInfo);
+	this.setState({ view: this.PAYMENT });
 	event.preventDefault();
   }
 
@@ -191,6 +198,16 @@ class EComm extends Component {
 	  //shipInfo: {address: "", city:"", province:"", country:""},
   }
 
+  useBilling(){
+	  this.setState({ shipInfo: this.state.billInfo});
+	  this.setState({ view: this.PAYMENT });
+  }
+
+  usePickup(){
+	  this.setState({ shipInfo: this.PICKUP_ADDRESS });
+	  this.setState({ view: this.PAYMENT });
+  }
+
   render () {
     return (
         <div>
@@ -200,7 +217,8 @@ class EComm extends Component {
                 { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne, getBilling: this.handleViewChange}}/> }
                 { this.state.view === this.HOME && <h1>home</h1> }
 				{ this.state.view === this.BILLING && <Billing onSubmit={this.handleSubmitBillingAddress} onChange={this.handleChangeBillingAddress} contact={this.state.contact} billing ={this.state.billInfo} /> }
-				{ this.state.view === this.SHIPPING && <Shipping onSubmit={this.handleSubmitShippingAddress} onChange={this.handleChangeShippingAddress} shipping={this.state.shipInfo} /> }
+				{ this.state.view === this.SHIPPING && <Shipping onSubmit={this.handleSubmitShippingAddress} onChange={this.handleChangeShippingAddress} shipping={this.state.shipInfo} onClick ={{useBilling: this.useBilling, usePickup: this.usePickup}}/> }
+				{ this.state.view === this.PAYMENT && <h1>PAYMENT</h1> }
 			</div>
         </div>
 
