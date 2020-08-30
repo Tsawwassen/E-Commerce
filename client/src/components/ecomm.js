@@ -5,6 +5,7 @@ import Navigation from './nav.js';
 import Items from './items.js';
 import Cart from './cart.js';
 import Billing from './billing.js';
+import Shipping from './shipping.js';
 
 class EComm extends Component {
   constructor(props){
@@ -14,6 +15,7 @@ class EComm extends Component {
     this.ITEM = 1;
 	this.CART = 2;
 	this.BILLING = 3;
+	this.SHIPPING = 4;
 
     this.state ={
         view: "",
@@ -34,6 +36,9 @@ class EComm extends Component {
 	//Order component functions
 	this.handleSubmitBillingAddress = this.handleSubmitBillingAddress.bind(this);
 	this.handleChangeBillingAddress = this.handleChangeBillingAddress.bind(this);
+
+	this.handleSubmitShippingAddress = this.handleSubmitShippingAddress.bind(this);
+	this.handleChangeShippingAddress = this.handleChangeShippingAddress.bind(this);
   }
 
   componentDidMount(){
@@ -124,10 +129,7 @@ class EComm extends Component {
 
 
   handleSubmitBillingAddress(event){
-	console.log('Handle submit billing address clicked');
-	console.table(this.state.billInfo);
-	console.table(this.state.contact);
-
+	this.setState({view: this.SHIPPING});
 	event.preventDefault();
   }
 
@@ -163,6 +165,32 @@ class EComm extends Component {
 	  //billInfo: {address: "", city:"", province:"", country:""},
   }
 
+  handleSubmitShippingAddress(event){
+	console.log("submit shipping address");
+	console.log(this.state.shipInfo);
+	event.preventDefault();
+  }
+
+  handleChangeShippingAddress(event){
+
+	switch(event.target.name){
+		case 'address': this.setState(update(this.state, 
+						{shipInfo: {address: {$set: event.target.value}}}
+					)); break;
+		case 'city': this.setState(update(this.state, 
+						{shipInfo: {city: {$set: event.target.value}}}
+					)); break;
+		case 'province': this.setState(update(this.state, 
+						{shipInfo: {province: {$set: event.target.value}}}
+					)); break;
+		case 'country': this.setState(update(this.state, 
+						{shipInfo: {country: {$set: event.target.value}}}
+					)); break;
+		default: console.log("code should never get here");
+	  }
+	  //shipInfo: {address: "", city:"", province:"", country:""},
+  }
+
   render () {
     return (
         <div>
@@ -172,7 +200,8 @@ class EComm extends Component {
                 { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne, getBilling: this.handleViewChange}}/> }
                 { this.state.view === this.HOME && <h1>home</h1> }
 				{ this.state.view === this.BILLING && <Billing onSubmit={this.handleSubmitBillingAddress} onChange={this.handleChangeBillingAddress} contact={this.state.contact} billing ={this.state.billInfo} /> }
-            </div>
+				{ this.state.view === this.SHIPPING && <Shipping onSubmit={this.handleSubmitShippingAddress} onChange={this.handleChangeShippingAddress} shipping={this.state.shipInfo} /> }
+			</div>
         </div>
 
     );

@@ -16,16 +16,7 @@ function Billing({onSubmit, onChange, contact, billing})  {
             </Form.Group>
             <AddressForm onChange={onChange} value={billing} />
 
-            {/* 
-            <Form.Control
-                type="text"
-                name="firstName"
-                value={values.firstName}
-                onChange={handleChange}
-                isValid={touched.firstName && !errors.firstName}
-              /> */}
-
-        <Button variant="primary" type="submit"> Continue to Shipping Address </Button>       
+            <Button variant="primary" type="submit"> Continue to Shipping Address </Button>       
         </Form>
     </div>);
 }
