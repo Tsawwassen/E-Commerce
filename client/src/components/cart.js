@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 //SCSS
 import './cart.scss';
 
+
 class Cart extends Component {
 
     displayCartItem(item, i){
@@ -45,7 +46,8 @@ class Cart extends Component {
                 <div className="row"><div className="col"><p>Subtotal : {subTotal}</p></div></div>
                 <div className="row"><div className="col"><p>Tax Total : {taxTotal}</p></div></div>
                 <div className="row"><div className="col"><p>Grand Total : {subTotal + taxTotal}</p></div></div>
-                <div className="row"><div className="col"><Button>Pay for Order</Button></div></div>
+                <div className="row"><div className="col"><Button onClick={this.props.onClick.getBilling}>Continue with Order</Button></div></div>
+               
             </div>
 
         );
