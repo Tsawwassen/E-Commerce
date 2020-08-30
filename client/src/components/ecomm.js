@@ -18,7 +18,8 @@ class EComm extends Component {
     this.state ={
         view: "",
         cart: [],
-		items:[],		
+		items:[],
+		contact: {name: "", email: ""},		
 		billInfo: {address: "", city:"", province:"", country:""},
     	shipInfo: {address: "", city:"", province:"", country:""},
     }
@@ -29,7 +30,10 @@ class EComm extends Component {
 	this.handleRemoveOne = this.handleRemoveOne.bind(this);
 	this.handleRemoveAll = this.handleRemoveAll.bind(this);
 	this.handleAddOne = this.handleAddOne.bind(this);
-	this.handleGetBilling = this.handleGetBilling.bind(this);
+
+	//Order component functions
+	this.handleSubmitBillingAddress = this.handleSubmitBillingAddress.bind(this);
+	this.handleChangeBillingAddress = this.handleChangeBillingAddress.bind(this);
   }
 
   componentDidMount(){
@@ -117,9 +121,46 @@ class EComm extends Component {
     }));
   }
   
-  handleGetBilling(event){
-	  //console.log("inside handleGetBilling");
-	  this.setState({view: this.BILLING});
+
+
+  handleSubmitBillingAddress(event){
+	console.log('Handle submit billing address clicked');
+	console.table(this.state.billInfo);
+	console.table(this.state.contact);
+
+	event.preventDefault();
+  }
+
+  handleChangeBillingAddress(event){
+
+	//Dev Note, Tried to put this code to use a variable as a key, but it didn't seem to like it
+	// Not sure why since i've use an index variable for arrays, need to figure out how to use variable for keys
+	//   this.setState(update(this.state, 
+	// 						{contact: {event.target.name: {$set: event.target.value}}}
+	// 						));
+	console.log(event.target.name);
+	switch(event.target.name){
+		case 'name': this.setState(update(this.state, 
+	 					{contact: {name: {$set: event.target.value}}}
+					)); break;
+		case 'email': this.setState(update(this.state, 
+						{contact: {email: {$set: event.target.value}}}
+					)); break;
+		case 'address': this.setState(update(this.state, 
+						{billInfo: {address: {$set: event.target.value}}}
+					)); break;
+		case 'city': this.setState(update(this.state, 
+						{billInfo: {city: {$set: event.target.value}}}
+					)); break;
+		case 'province': this.setState(update(this.state, 
+						{billInfo: {province: {$set: event.target.value}}}
+					)); break;
+		case 'country': this.setState(update(this.state, 
+						{billInfo: {country: {$set: event.target.value}}}
+					)); break;
+		default: console.log("code should never get here");
+	  }
+	  //billInfo: {address: "", city:"", province:"", country:""},
   }
 
   render () {
@@ -130,7 +171,7 @@ class EComm extends Component {
                 { this.state.view === this.ITEM && <Items onSubmit={this.handleAddToCart} items={this.state.items}/>  }
                 { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne, getBilling: this.handleViewChange}}/> }
                 { this.state.view === this.HOME && <h1>home</h1> }
-				{ this.state.view === this.BILLING && <Billing /> }
+				{ this.state.view === this.BILLING && <Billing onSubmit={this.handleSubmitBillingAddress} onChange={this.handleChangeBillingAddress} contact={this.state.contact} billing ={this.state.billInfo} /> }
             </div>
         </div>
 
