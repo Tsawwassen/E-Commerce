@@ -80,13 +80,7 @@ class EComm extends Component {
           if(item.sku === new_item.sku){
             //Not sure if this code can be reduced, just remember to step down the object to update the intended key
             this.setState(update(this.state, {
-                cart: {
-                    [i]: {
-                        qty: {
-                            $set: this.state.cart[i].qty + new_item.qty
-                        }
-                    }
-                }
+                cart: {[i]: { qty: {$set: this.state.cart[i].qty + new_item.qty}}}
             }));
             added_flag = true;
             return true;
@@ -109,13 +103,7 @@ class EComm extends Component {
 	}
 	
     this.setState(update(this.state, {
-        cart: {
-            [event.target.value]: {
-                qty: {
-                    $set: this.state.cart[event.target.value].qty - 1
-                }
-            }
-        }
+        cart: {[event.target.value]: {qty: {$set: this.state.cart[event.target.value].qty - 1}}}
     }));
   }
 
@@ -124,14 +112,8 @@ class EComm extends Component {
   }
 
   handleAddOne(event){
-	this.setState(update(this.state, {
-        cart: {
-            [event.target.value]: {
-                qty: {
-                    $set: this.state.cart[event.target.value].qty + 1
-                }
-            }
-        }
+	this.setState(update(this.state, 
+		{cart: {[event.target.value]: {qty: {$set: this.state.cart[event.target.value].qty + 1}}}
     }));
   }
   
