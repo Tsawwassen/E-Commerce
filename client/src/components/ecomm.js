@@ -138,7 +138,7 @@ class EComm extends Component {
 	//   this.setState(update(this.state, 
 	// 						{contact: {event.target.name: {$set: event.target.value}}}
 	// 						));
-	console.log(event.target.name);
+	
 	switch(event.target.name){
 		case 'name': this.setState(update(this.state, 
 	 					{contact: {name: {$set: event.target.value}}}
