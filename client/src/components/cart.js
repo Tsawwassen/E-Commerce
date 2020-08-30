@@ -46,7 +46,7 @@ class Cart extends Component {
                 <div className="row"><div className="col"><p>Subtotal : {subTotal}</p></div></div>
                 <div className="row"><div className="col"><p>Tax Total : {taxTotal}</p></div></div>
                 <div className="row"><div className="col"><p>Grand Total : {subTotal + taxTotal}</p></div></div>
-                <div className="row"><div className="col"><Button onClick={this.props.onClick.getBilling}>Continue with Order</Button></div></div>
+                <div className="row"><div className="col"><Button value='/billing' onClick={this.props.onClick.getBilling}>Continue with Order</Button></div></div>
                
             </div>
 
