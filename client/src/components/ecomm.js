@@ -16,13 +16,18 @@ class EComm extends Component {
     this.state ={
         view: "",
         cart: [],
-        items:[]
+		items:[],		
+		billInfo: {address: "", city:"", province:"", country:""},
+    	shipInfo: {address: "", city:"", province:"", country:""},
     }
     this.handleViewChange = this.handleViewChange.bind(this);
-    this.handleAddToCart = this.handleAddToCart.bind(this);
+	this.handleAddToCart = this.handleAddToCart.bind(this);
+	
+	//Cart component Functions
 	this.handleRemoveOne = this.handleRemoveOne.bind(this);
 	this.handleRemoveAll = this.handleRemoveAll.bind(this);
 	this.handleAddOne = this.handleAddOne.bind(this);
+	this.handleGetBilling = this.handleGetBilling.bind(this);
   }
 
   componentDidMount(){
@@ -113,6 +118,10 @@ class EComm extends Component {
         }
     }));
   }
+  
+  handleGetBilling(event){
+	  console.log("inside handleGetBilling")
+  }
 
   render () {
     return (
@@ -120,7 +129,7 @@ class EComm extends Component {
             <Navigation onClick={this.handleViewChange}/>
             <div className="container">
                 { this.state.view === this.ITEM && <Items onSubmit={this.handleAddToCart} items={this.state.items}/>  }
-                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne}}/> }
+                { this.state.view === this.CART && <Cart values={this.state.cart} onClick={{removeOne: this.handleRemoveOne, removeAll:this.handleRemoveAll, addOne: this.handleAddOne, getBilling: this.handleGetBilling}}/> }
                 { this.state.view === this.HOME &&<h1>home</h1> }
             </div>
         </div>
