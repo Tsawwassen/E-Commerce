@@ -6,6 +6,7 @@ import Items from './items.js';
 import Cart from './cart.js';
 import Billing from './billing.js';
 import Shipping from './shipping.js';
+import Payment from './payment.js';
 
 class EComm extends Component {
   constructor(props){
@@ -218,7 +219,7 @@ class EComm extends Component {
                 { this.state.view === this.HOME && <h1>home</h1> }
 				{ this.state.view === this.BILLING && <Billing onSubmit={this.handleSubmitBillingAddress} onChange={this.handleChangeBillingAddress} contact={this.state.contact} billing ={this.state.billInfo} /> }
 				{ this.state.view === this.SHIPPING && <Shipping onSubmit={this.handleSubmitShippingAddress} onChange={this.handleChangeShippingAddress} shipping={this.state.shipInfo} onClick ={{useBilling: this.useBilling, usePickup: this.usePickup}}/> }
-				{ this.state.view === this.PAYMENT && <h1>PAYMENT</h1> }
+				{ this.state.view === this.PAYMENT && <Payment cart={this.state.cart} billing={this.state.billInfo} shipping={this.state.shipInfo} /> }
 			</div>
         </div>
 
