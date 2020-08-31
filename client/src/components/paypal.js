@@ -1,13 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function PayPal( { cart })  {
+function PayPal( { due })  {
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
     const paypalRef = useRef();
-
-    console.log("Isnide Paypal component");
-    console.table(cart);
-
 
     useEffect(() => {
       window.paypal
@@ -16,10 +12,10 @@ function PayPal( { cart })  {
             return actions.order.create({
               purchase_units: [ //Put cart content array creation here
                 {
-                  description: "DESCRIPTION", //Change
+                  description: "ECommerce Order", //Change
                   amount: {
                     currency_code: 'CAD',
-                    value: '1.00', //Change
+                    value: due, //Change
                   },
                 },
               ],
@@ -36,7 +32,7 @@ function PayPal( { cart })  {
           },
         })
         .render(paypalRef.current);
-    }, [cart]);
+    }, [due]);
   
     if (paidFor) {
       return (

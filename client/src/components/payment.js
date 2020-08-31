@@ -1,4 +1,5 @@
 import React from 'react';
+import Paypal from './paypal.js';
 
 
 function Payment({cart, billing, shipping})  {
@@ -23,7 +24,7 @@ function Payment({cart, billing, shipping})  {
         <p>Tax Total : {taxTotal}</p>
         <p>Shipping : {shipTotal}</p>
         <p>Amount Due : {subTotal + taxTotal + shipTotal}</p>
-       
+        <Paypal due={subTotal + taxTotal + shipTotal} />
     </div>);
 }
 
