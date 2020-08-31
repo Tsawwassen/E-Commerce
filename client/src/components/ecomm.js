@@ -26,7 +26,8 @@ class EComm extends Component {
 		items:[],
 		contact: {name: "", email: ""},		
 		billInfo: {address: "", city:"", province:"", country:""},
-    	shipInfo: {address: "", city:"", province:"", country:""},
+		shipInfo: {address: "", city:"", province:"", country:""},
+		pickup: false,
     }
     this.handleViewChange = this.handleViewChange.bind(this);
 	this.handleAddToCart = this.handleAddToCart.bind(this);
@@ -46,7 +47,9 @@ class EComm extends Component {
 	this.useBilling = this.useBilling.bind(this);
 	this.usePickup = this.usePickup.bind(this);
 
-	
+	//Payment component functions
+	this.payAtPickup = this.payAtPickup.bind(this);
+	this.paypalSuccess = this.paypalSuccess.bind(this);
 
   }
 
@@ -206,9 +209,24 @@ class EComm extends Component {
 
   usePickup(){
 	  this.setState({ shipInfo: this.PICKUP_ADDRESS });
+	  this.setState({pickup: true});
 	  this.setState({ view: this.PAYMENT });
   }
+  payAtPickup(){
+	  console.log("pay at pickup button clicked");
+	  //Post order to backend
+	  //Change view to order placed, shoow order number
+  }
 
+  paypalSuccess(confirmation){
+	console.log("paypal success");
+	console.log(confirmation.id);
+
+	let paypal_id = confirmation.id; //Paypal transaction number (I think)
+	
+	//Post order to backend
+	//Change view to order placed, shoow order number
+  }
   render () {
     return (
         <div>
@@ -219,7 +237,7 @@ class EComm extends Component {
                 { this.state.view === this.HOME && <h1>home</h1> }
 				{ this.state.view === this.BILLING && <Billing onSubmit={this.handleSubmitBillingAddress} onChange={this.handleChangeBillingAddress} contact={this.state.contact} billing ={this.state.billInfo} /> }
 				{ this.state.view === this.SHIPPING && <Shipping onSubmit={this.handleSubmitShippingAddress} onChange={this.handleChangeShippingAddress} shipping={this.state.shipInfo} onClick ={{useBilling: this.useBilling, usePickup: this.usePickup}}/> }
-				{ this.state.view === this.PAYMENT && <Payment cart={this.state.cart} billing={this.state.billInfo} shipping={this.state.shipInfo} /> }
+				{ this.state.view === this.PAYMENT && <Payment cart={this.state.cart} shipping={this.state.shipInfo} pickup={this.state.pickup} onClick ={{payAtPickup: this.payAtPickup}}  onSuccess={this.paypalSuccess} /> }
 			</div>
         </div>
 
