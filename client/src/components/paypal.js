@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-function PayPal( { due })  {
+function PayPal( { due, onSuccess })  {
     const [paidFor, setPaidFor] = useState(false);
     const [error, setError] = useState(null);
     const paypalRef = useRef();
@@ -10,12 +10,12 @@ function PayPal( { due })  {
         .Buttons({
           createOrder: (data, actions) => {
             return actions.order.create({
-              purchase_units: [ //Put cart content array creation here
+              purchase_units: [ //It looks like you could let paypal calculate the amount due by adding to this array, but just putting in one line item for this project
                 {
-                  description: "ECommerce Order", //Change
+                  description: "ECommerce Order", 
                   amount: {
                     currency_code: 'CAD',
-                    value: due, //Change
+                    value: due, 
                   },
                 },
               ],
@@ -25,6 +25,7 @@ function PayPal( { due })  {
             const order = await actions.order.capture();
             setPaidFor(true);
             console.log(order);
+            onSuccess(order);
           },
           onError: err => {
             setError(err);
@@ -32,9 +33,11 @@ function PayPal( { due })  {
           },
         })
         .render(paypalRef.current);
-    }, [due]);
+    }, [due, onSuccess]);
   
     if (paidFor) {
+   
+      //Inside, here change view and post order to backend
       return (
         <div>
           <h1>Congrats, you just bought !</h1>
