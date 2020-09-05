@@ -213,20 +213,54 @@ class EComm extends Component {
 	  this.setState({ view: this.PAYMENT });
   }
   payAtPickup(){
-	  console.log("pay at pickup button clicked");
-	  //Post order to backend
-	  //Change view to order placed, shoow order number
+
+	  let subTotal = 0; 
+	  let taxTotal = 0;
+  
+	  this.state.cart.forEach((item) => {
+		  let t_price = item.qty * item.price;
+		  subTotal += t_price;
+		  taxTotal += t_price * item.tax;
+	  });
+	  
+	  let order = {}
+	  order.customer = this.state.contact;
+	  order.billInfo = this.state.billInfo;
+	  order.shipInfo = this.state.shipInfo;
+	  order.items = this.state.cart;
+	  order.transaction = -1;
+	  order.totals = {sub: subTotal, tax: taxTotal, due: subTotal + taxTotal};
+
+	  this.postOrder(order);
   }
 
   paypalSuccess(confirmation){
-	console.log("paypal success");
-	console.log(confirmation.id);
 
-	let paypal_id = confirmation.id; //Paypal transaction number (I think)
+	let subTotal = 0; 
+    let taxTotal = 0;
+
+    this.state.cart.forEach((item) => {
+        let t_price = item.qty * item.price;
+        subTotal += t_price;
+        taxTotal += t_price * item.tax;
+    });
+	
+	let order = {}
+	order.customer = this.state.contact;
+	order.billInfo = this.state.billInfo;
+	order.shipInfo = this.state.shipInfo;
+	order.items = this.state.cart;
+	order.transaction = confirmation.id;
+	order.totals = {sub: subTotal, tax: taxTotal, due: subTotal + taxTotal};
 	
 	//Post order to backend
-	//Change view to order placed, shoow order number
+	this.postOrder(order);
   }
+
+  postOrder(order) {
+	  console.log("Inside Post Order");
+  }
+
   render () {
     return (
         <div>
