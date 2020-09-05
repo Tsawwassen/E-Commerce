@@ -7,6 +7,16 @@ var router = express.Router();
 var Items = require('../models/item');
 var Orders = require('../models/order');
 
+//Class Object
+var Gmail = require('../class/gmail.js');
+var email = new Gmail();
+//email.test();
+//email.sendInvoice({test: 'test'});
+
+
+
+
+
 //Database
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/ecomm', {useNewUrlParser: true,  useUnifiedTopology: true });
