@@ -24,7 +24,6 @@ function PayPal( { due, onSuccess })  {
           onApprove: async (data, actions) => {
             const order = await actions.order.capture();
             setPaidFor(true);
-            console.log(order);
             onSuccess(order);
           },
           onError: err => {
