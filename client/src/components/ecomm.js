@@ -272,11 +272,12 @@ class EComm extends Component {
 	  .then(res => res.json())
 	  .then( res => {
 		  this.setState({orderNumber: res.data});
-		  this.setState({view:this.ORDER_PLACED});
+		  this.setState({view: this.ORDER_PLACED});
+		 
 		  //Reset state values here, except for view and orderNumber
 		  this.setState({...this.STATE_RESET});
 		})
-	  .catch(err => console.log('error'));
+	  .catch(err => console.log(err));
   }
 
   render () {
