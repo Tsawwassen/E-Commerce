@@ -261,9 +261,9 @@ class EComm extends Component {
 
 	  fetch('/api/order', {	method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(order)})
 	  .then(res => res.json())
-	  .then( order => {
-		
-		  console.log(order.data);
+	  .then( res => {
+		  console.log(res.data);
+		  //Display order number, clear state values
 		})
 	  .catch(err => console.log('error'));
   }

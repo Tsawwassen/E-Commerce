@@ -29,12 +29,27 @@ router.get('/items', function(req, res){
  router.post('/order', function(req, res){
 	Orders.create(req.body)
 	.then(order => {
+		//Update inventory
+		//console.log(order.items);
+		updateInventory(order.items);
 		res.json({status: "success", data: order._id});
 	})
 	.catch(error => {
 		res.json({status: "error", data: error});
 	});
 });
+
+let updateInventory = (items) => {
+	//console.log(items);
+
+	items.forEach((item) => {
+		Items.findOne({sku: item.sku})
+		.then(i =>{
+		 	i.inv_level = i.inv_level - item.qty;
+			i.save();
+		});
+	})
+}
 
 /**
  * TODO
