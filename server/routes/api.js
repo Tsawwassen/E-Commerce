@@ -1,5 +1,7 @@
 var express = require('express');
+var app = express();
 var router = express.Router();
+
 
 //Models
 var Items = require('../models/item');
@@ -24,6 +26,11 @@ router.get('/items', function(req, res){
     });
 });
 
+router.post('/order', function(req, res){
+	console.log("inside POST /api/order");
+	console.log(req.body);
+	res.send('Order Added');
+});
 
 /**
  * TODO
