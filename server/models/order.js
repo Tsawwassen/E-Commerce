@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 
+
 const Order = new mongoose.Schema({
-	sku: {type: String},
-    orderNumber: {type: Number},
+    //orderNumber: {type: Number}, Don't think I need orderNumber, can just use the MongoDB
     customer: {name: {type: String}, email: {type: String}},
     billInfo: {address: {type: String}, city:{type: String}, province:{type: String}, country:{type: String}},
     shipInfo: {address: {type: String}, city:{type: String}, province:{type: String}, country:{type: String}},
