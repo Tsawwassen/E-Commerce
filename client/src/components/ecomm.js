@@ -18,7 +18,15 @@ class EComm extends Component {
 	this.BILLING = 3;
 	this.SHIPPING = 4;
 	this.PAYMENT = 5;
+	this.ORDER_PLACED = 6;
 	this.PICKUP_ADDRESS = {address: "5413 7th ave", city:"Tsawwassen", province:"BC", country:"Canada"};
+	this.STATE_RESET = {
+		cart: [], 
+		contact:{name:"", email:""}, 
+		billInfo: {address: "", city:"", province:"", country:""},
+		shipInfo: {address: "", city:"", province:"", country:""}, 
+		pickup: false,
+	};
 
     this.state ={
         view: "",
@@ -28,6 +36,7 @@ class EComm extends Component {
 		billInfo: {address: "", city:"", province:"", country:""},
 		shipInfo: {address: "", city:"", province:"", country:""},
 		pickup: false,
+		orderNumber: "",
     }
     this.handleViewChange = this.handleViewChange.bind(this);
 	this.handleAddToCart = this.handleAddToCart.bind(this);
@@ -262,8 +271,10 @@ class EComm extends Component {
 	  fetch('/api/order', {	method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(order)})
 	  .then(res => res.json())
 	  .then( res => {
-		  console.log(res.data);
-		  //Display order number, clear state values
+		  this.setState({orderNumber: res.data});
+		  this.setState({view:this.ORDER_PLACED});
+		  //Reset state values here, except for view and orderNumber
+		  this.setState({...this.STATE_RESET});
 		})
 	  .catch(err => console.log('error'));
   }
@@ -279,6 +290,7 @@ class EComm extends Component {
 				{ this.state.view === this.BILLING && <Billing onSubmit={this.handleSubmitBillingAddress} onChange={this.handleChangeBillingAddress} contact={this.state.contact} billing ={this.state.billInfo} /> }
 				{ this.state.view === this.SHIPPING && <Shipping onSubmit={this.handleSubmitShippingAddress} onChange={this.handleChangeShippingAddress} shipping={this.state.shipInfo} onClick ={{useBilling: this.useBilling, usePickup: this.usePickup}}/> }
 				{ this.state.view === this.PAYMENT && <Payment cart={this.state.cart} shipping={this.state.shipInfo} pickup={this.state.pickup} onClick ={{payAtPickup: this.payAtPickup}}  onSuccess={this.paypalSuccess} /> }
+				{ this.state.view === this.ORDER_PLACED && <h1>Your order number is {this.state.orderNumber}</h1>}
 			</div>
         </div>
 
