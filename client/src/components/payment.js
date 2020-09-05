@@ -4,8 +4,6 @@ import { Button } from 'react-bootstrap';
 
 
 function Payment({cart, shipping, pickup, onClick, onSuccess})  {
-    console.table(cart);
-    console.table(shipping);
 
     let subTotal = 0; 
     let taxTotal = 0;
