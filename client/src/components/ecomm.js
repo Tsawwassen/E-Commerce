@@ -258,10 +258,14 @@ class EComm extends Component {
   }
 
   postOrder(order) {
-	  console.log("Inside Post Order");
-	  console.log(order);
+
 	  fetch('/api/order', {	method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(order)})
-	  .then((req, res) => console.log('fetch complete'));
+	  .then(res => res.json())
+	  .then( order => {
+		
+		  console.log(order.data);
+		})
+	  .catch(err => console.log('error'));
   }
 
   render () {

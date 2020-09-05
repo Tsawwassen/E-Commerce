@@ -26,10 +26,14 @@ router.get('/items', function(req, res){
     });
 });
 
-router.post('/order', function(req, res){
-	console.log("inside POST /api/order");
-	console.log(req.body);
-	res.send('Order Added');
+ router.post('/order', function(req, res){
+	Orders.create(req.body)
+	.then(order => {
+		res.json({status: "success", data: order._id});
+	})
+	.catch(error => {
+		res.json({status: "error", data: error});
+	});
 });
 
 /**
