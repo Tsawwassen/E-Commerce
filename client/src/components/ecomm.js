@@ -18,7 +18,7 @@ class EComm extends Component {
 	this.BILLING = 3;
 	this.SHIPPING = 4;
 	this.PAYMENT = 5;
-	this.PICKUP_ADDRESS = {address: "5413 7th ave", city:"Tsawwassen", province:"BC", country:"CAN"};
+	this.PICKUP_ADDRESS = {address: "5413 7th ave", city:"Tsawwassen", province:"BC", country:"Canada"};
 
     this.state ={
         view: "",
@@ -259,6 +259,9 @@ class EComm extends Component {
 
   postOrder(order) {
 	  console.log("Inside Post Order");
+	  console.log(order);
+	  fetch('/api/order', {	method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(order)})
+	  .then((req, res) => console.log('fetch complete'));
   }
 
   render () {
