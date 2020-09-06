@@ -19,6 +19,7 @@ var email = new Gmail();
 
 //Database
 var mongoose = require('mongoose');
+var ObjectId = require('mongojs').ObjectID;
 mongoose.connect('mongodb://localhost/ecomm', {useNewUrlParser: true,  useUnifiedTopology: true });
 
 /* GET home page. */
@@ -36,7 +37,7 @@ router.get('/items', function(req, res){
     });
 });
 
- router.post('/order', function(req, res){
+router.post('/order', function(req, res){
 	Orders.create(req.body)
 	.then(order => {
 		updateInventory(order.items);
@@ -56,6 +57,18 @@ let updateInventory = (items) => {
 		});
 	})
 }
+
+ router.get('/sendInvoiceEmail/:id', function(req, res){
+	 Orders.findById(req.params.id)
+	 .then(order => {
+
+		 //email.sendInvoice(order);
+		 //console.log(email.CREDENTIALAS);
+		 Gmail.authorize(email.CREDENTIALAS, this.getAuth);
+		 res.json({status: "success"});
+	 })
+	.catch(err => res.json({status: "error", data: err}));
+ });
 
 /**
  * TODO

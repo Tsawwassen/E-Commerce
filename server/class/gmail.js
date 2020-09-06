@@ -11,6 +11,27 @@ const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly','https://www.go
 // time.
 const TOKEN_PATH = './class/token.json';
 
+    /**
+     * Create an OAuth2 client with the given credentials, and then execute the
+     * given callback function.
+     * @param {Object} credentials The authorization client credentials.
+     * @param {function} callback The callback to call with the authorized client.
+     */
+    function authorize(credentials, callback) {
+	    const {client_secret, client_id, redirect_uris} = credentials.web;
+	    const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris);
+
+	    // Check if we have previously stored a token.
+	    fs.readFile(TOKEN_PATH, (err, token) => {
+	        if(err){
+                //console.log('read file error');
+	            return getNewToken(oAuth2Client, callback);
+	        }
+	        oAuth2Client.setCredentials(JSON.parse(token));
+	        callback(oAuth2Client);
+	    });
+	}
+
 class Gmail{
     
     constructor() {
@@ -21,29 +42,11 @@ class Gmail{
         
             // Authorize the client with credentials, then call the Gmail API.
             this.CREDENTIALAS = content;
-            this.authorize(JSON.parse(content), this.getAuth);
+            authorize(JSON.parse(content), this.getAuth);
         });
       }
 
-    /**
-     * Create an OAuth2 client with the given credentials, and then execute the
-     * given callback function.
-     * @param {Object} credentials The authorization client credentials.
-     * @param {function} callback The callback to call with the authorized client.
-     */
-    authorize(credentials, callback) {
-        const {client_secret, client_id, auth_uri} = credentials.web;
-        const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, auth_uri);
 
-        // Check if we have previously stored a token.
-        fs.readFile(TOKEN_PATH, (err, token) => {
-            if(err){
-                return this.getNewToken(oAuth2Client, callback);
-            }
-            oAuth2Client.setCredentials(JSON.parse(token));
-            callback(oAuth2Client);
-        });
-    }
 
     /**
      * Get and store new token after prompting for user authorization, and then
@@ -52,7 +55,7 @@ class Gmail{
      * @param {getEventsCallback} callback The callback for the authorized client.
      */
 
-    getNewToken(oAuth2Client, callback) {
+    getNewToken(oAuth2Client) {
         const authUrl = oAuth2Client.generateAuthUrl({
             access_type: 'offline',
             scope: SCOPES,
@@ -72,16 +75,16 @@ class Gmail{
                 if (err) return console.error(err);
                 console.log('Token stored to', TOKEN_PATH);
             });
-            callback(oAuth2Client);
+            return (oAuth2Client);
             });
         });
     }
 
     getAuth(auth){
-
+        console.log('authorized' + JSON.stringify(auth.credentials));
     }
     test(){
-        //console.log(`Testing Credentials log - ${this.CREDENTIALAS}`);
+        console.log(`Testing Credentials log - `);
     }
     sendInvoice(order){
         //Send order object
@@ -101,15 +104,15 @@ class Gmail{
         //constructor(auth, to, sub, body, task, attatchmentSrc)
         this.me = 'mitchell.test.smith@gmail.com'; // Who is sending the email
         this.task = 'mail';
-        this.auth = authorize(this.CREDENTIALAS);
+        this.auth = this.CREDENTIALAS;
         this.to = "mitchell.rian.smith@gmail.com"//Using hard coded email for testing //c_email;
         this.sub = `Invoice - Order ${orderNumber}`;
         this.body = 'TEMP EMAIL BODY';
-        this.gmail = google.gmail({version: 'v1', auth});
+        //this.gmail = google.gmail({version: 'v1', auth});
         this.attatchment = '';
 
-
-        this.makeBody();
+        console.log("hello");
+        //this.makeBody();
     }
     makeBody(){
 		var arr = [];
