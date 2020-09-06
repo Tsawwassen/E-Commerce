@@ -267,15 +267,15 @@ class EComm extends Component {
   }
 
   postOrder(order) {
-
 	  fetch('/api/order', {	method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(order)})
 	  .then(res => res.json())
 	  .then( res => {
 		  this.setState({orderNumber: res.data});
 		  this.setState({view: this.ORDER_PLACED});
-		 
 		  //Reset state values here, except for view and orderNumber
 		  this.setState({...this.STATE_RESET});
+		  //Send invoice to customer by email
+		  fetch(`/api/sendInvoiceEmail/${res.data}`);
 		})
 	  .catch(err => console.log(err));
   }
