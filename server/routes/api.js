@@ -9,9 +9,7 @@ var Orders = require('../models/order');
 
 //Class Object
 var Gmail = require('../class/gmail.js');
-var email = new Gmail();
-//email.test();
-//email.sendInvoice({test: 'test'});
+
 
 
 
@@ -61,11 +59,8 @@ let updateInventory = (items) => {
  router.get('/sendInvoiceEmail/:id', function(req, res){
 	 Orders.findById(req.params.id)
 	 .then(order => {
-
-		 //email.sendInvoice(order);
-		 //console.log(email.CREDENTIALAS);
-		 Gmail.authorize(email.CREDENTIALAS, this.getAuth);
-		 res.json({status: "success"});
+		console.log(order);
+		res.json({status: "success"});
 	 })
 	.catch(err => res.json({status: "error", data: err}));
  });
